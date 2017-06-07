@@ -37,7 +37,7 @@ app.use(express.static("public"));
 
 // Database configuration with mongoose
 //if in production, set uri to be production env variable, otherwise connect to the localhost uri. 
-var databaseURI = (process.env.MONGODB_URI) ? process.env.MONGOD_URI : "mongodb://localhost/week18hw";
+var databaseURI = (process.env.MONGODB_URI ? process.env.MONGOD_URI : "mongodb://localhost/week18hw");
 mongoose.connect(databaseURI);
 var db = mongoose.connection;
 
