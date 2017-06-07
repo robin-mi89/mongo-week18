@@ -1,0 +1,34 @@
+{
+  "name": "mongo-week18",
+  "version": "0.0.1",
+  "description": "web app that uses scraping and mongodb",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robin-mi89/mongo-week18.git"
+  },
+  "keywords": [
+    "mongoose",
+    "mongodb",
+    "cheerio"
+  ],
+  "author": "Robin Mi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robin-mi89/mongo-week18/issues"
+  },
+  "homepage": "https://github.com/robin-mi89/mongo-week18#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cheerio": "^1.0.0-rc.1",
+    "express": "^4.15.3",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^4.10.4",
+    "morgan": "^1.8.2",
+    "request": "^2.81.0"
+  }
+}
