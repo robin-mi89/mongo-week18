@@ -148,12 +148,22 @@ app.get("/articles/:id", function(req, res)
   })
 });
 
-//should remove all articles and notes
-app.get("/articles/delete", function (req, res)
+//removes an article by the id of the article. 
+app.get("/articles/delete/:id", function (req, res)
 {
-  db.Article.remove({});
-  db.Note.remove({});
-  res.send("Collections deleted");
+  Article.remove({"_id": req.params.id}, function(err, data)
+  {
+    if (err) 
+    {
+      res.status(500);
+      console.log(err);
+    }
+    else
+    {
+      res.json(data);
+    }
+  });
+  
 });
 
 // Create a new note or replace an existing note

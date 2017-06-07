@@ -1,13 +1,32 @@
 // Grab the articles as a json
-$.getJSON("/articles", function(data) {
-  // For each one
-  for (var i = 0; i < data.length; i++) {
-    // Display the apropos information on the page
-    $("#saved-articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />");
-    $("#saved-articles").append("<a href=" + data[i].link + ">"+data[i].link+"</a><br />");
-    $("#articles").append("<hr/>");
-  }
-});
+getSavedArticles();
+
+function getSavedArticles()
+{
+  $.getJSON("/articles", function(data) {
+    // For each one
+    for (var i = 0; i < data.length; i++) {
+      // Display the apropos information on the page
+      populateArticle(data[i])
+    }
+  });
+}
+
+//general function to add an article to the saved-articles div
+function populateArticle(value)
+{
+  let container = $("<div class='article-div'></div>");
+  let btnDelete = $("<button class='btn btn-danger del-article' style='margin-left: 15px'>Delete Article</button>");
+  let btnNote = $("<button class='btn btn-info add-note'>Add Note</button>")
+  btnNote.attr("data-id", value._id);
+  btnDelete.attr("data-id", value._id);
+  container.append("<p data-id='" + value._id + "'>" + value.title + "<br />");
+  container.append("<a href=" + value.link + ">"+value.link+"</a><br />");
+  container.append(btnNote);
+  container.append(btnDelete);
+  container.append("<hr/>");
+  $("#saved-articles").append(container);
+}
 
 //scrape button click. Scrapes programmerhumor and creates a list of articles that populates page. 
 $("#btnScrape").on("click", function()
@@ -35,13 +54,26 @@ $(document).on("click", "button.save-article", function(event) {
   var article = {title: $(this).attr("data-title"), link: $(this).attr("data-link")};
   $.post("/articles", article, function(data)
   {
-    console.log("posted article");
-    console.log(JSON.stringify(data, null, 2));
+    populateArticle(data);
   })
 });
 
-// Whenever someone clicks a p tag
-$(document).on("click", "p", function() {
+//When someone clicks on delete button for an article
+$(document).on("click", "button.del-article", function(event)
+{
+  console.log("clicked on delete for id: "+ $(this).attr("data-id"));
+  event.preventDefault();
+  $.get("/articles/delete/"+$(this).attr("data-id"), function(data)
+  {
+    $("#saved-articles").empty();
+    getSavedArticles();
+    console.log(data);
+  });
+})
+
+// Whenever someone clicks the add-note button
+$(document).on("click", "button.add-note", function(event) {
+  event.preventDefault();
   // Empty the notes from the note section
   $("#notes").empty();
   // Save the id from the p tag
@@ -103,18 +135,3 @@ $(document).on("click", "#savenote", function() {
   $("#bodyinput").val("");
 });
 
-$("#btnDelete").on("click", function(e)
-{
-  console.log("clicked delete");
-  e.preventDefault();
-  $.get("/articles/delete", function(err, value)
-  {
-    if(err)
-    console.log(err);
-    else
-    {
-      console.log(value);
-      $("#saved-articles").clear();
-    }
-  })
-});
