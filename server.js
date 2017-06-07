@@ -107,7 +107,9 @@ app.get("/articles", function(req, res)
 
 app.post("/articles", function(req, res)
 {
+  console.log("request body: "+ JSON.stringify(req.body));
   var newArticle = new Article(req.body);
+  console.log("new Article: " + JSON.stringify(newArticle, null, 2));
   Article.create(newArticle, function(err, doc)
   {
     if(err)

@@ -3,7 +3,9 @@ $.getJSON("/articles", function(data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+    $("#saved-articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />");
+    $("#saved-articles").append("<a href=" + data[i].link + ">"+data[i].link+"</a><br />");
+    $("#articles").append("<hr/>");
   }
 });
 
@@ -16,7 +18,7 @@ $("#btnScrape").on("click", function()
     console.log("got back data" + JSON.stringify(data));
     data.forEach(function(value)
     {
-      let submitBtn = $("<button class='btn btn-info save'>Save Article</button>");
+      let submitBtn = $("<button class='btn btn-info save-article'>Save Article</button>");
       submitBtn.attr("data-title", value.title);
       submitBtn.attr("data-link", value.link);
       $("#articles").append("<p>"+value.title+"<br />" + "</p>");
@@ -28,8 +30,10 @@ $("#btnScrape").on("click", function()
 });
 
 //clicked on save article, push article to db. 
-$(document).on("click", "button.submit-article", function() {
-  $.post("/articles", function(data)
+$(document).on("click", "button.save-article", function(event) {
+  event.preventDefault();
+  var article = {title: $(this).attr("data-title"), link: $(this).attr("data-link")};
+  $.post("/articles", article, function(data)
   {
     console.log("posted article");
     console.log(JSON.stringify(data, null, 2));

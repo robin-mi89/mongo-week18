@@ -8,40 +8,23 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
   </head>
   <body>
+    <header "page-header">
+      <button class="btn btn-primary" id="btnScrape">Scrape for articles</button>
+      <button class="btn btn-success" id="btnSavedArticles">Go to saved articles </button>
+    </header>
     <div class="container">
-      <header "page-header">
-        <h1>Programmer Humor Scraper</h1>
-        <button class="btn btn-primary" id="btnScrape">Scrape for articles</button>
-        
-      </header>
-      
+      <h1>Programmer Humor Scraper</h1>
       <div class="jumbotron">
-        <div class="row">
-          <div class="col-sm-8">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">Your Saved Articles</h3>
-              </div>
-              <div class="panel-body">
-                <div id="saved-articles"></div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div id="notes"></div>
-          </div>
-        </div>
-
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">Scraped Articles Here</h3>
+            <h3 class="panel-title">Your Saved Articles</h3>
           </div>
           <div class="panel-body">
             <div id="articles"></div>
           </div>
         </div>
         
-        
+        <div id="notes"></div>
       </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
