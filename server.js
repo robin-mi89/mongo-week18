@@ -187,9 +187,10 @@ app.post("/articles/:id", function(req, res)
   });
 });
 
-
+//sets port variable to process.env.port if exists or 3000 if not. 
+const PORT = process.env.PORT || 3000;
 // Listen on port 3000
-app.listen(3000, function() 
+app.listen(PORT, function() 
 {
   console.log("App running on port 3000!");
 });
