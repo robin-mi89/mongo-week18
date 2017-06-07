@@ -102,3 +102,19 @@ $(document).on("click", "#savenote", function() {
   $("#titleinput").val("");
   $("#bodyinput").val("");
 });
+
+$("#btnDelete").on("click", function(e)
+{
+  console.log("clicked delete");
+  e.preventDefault();
+  $.get("/articles/delete", function(err, value)
+  {
+    if(err)
+    console.log(err);
+    else
+    {
+      console.log(value);
+      $("#saved-articles").clear();
+    }
+  })
+});

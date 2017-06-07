@@ -36,7 +36,9 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/week18hw");
+//if in production, set uri to be production env variable, otherwise connect to the localhost uri. 
+var databaseURI = (process.env.MONGODB_URI) ? process.env.MONGOD_URI : "mongodb://localhost/week18hw";
+mongoose.connect(databaseURI);
 var db = mongoose.connection;
 
 // Show any mongoose errors
@@ -105,6 +107,7 @@ app.get("/articles", function(req, res)
   });
 });
 
+//saves an article to the database. 
 app.post("/articles", function(req, res)
 {
   console.log("request body: "+ JSON.stringify(req.body));
@@ -144,6 +147,7 @@ app.get("/articles/:id", function(req, res)
   })
 });
 
+//should remove all articles and notes
 app.get("/articles/delete", function (req, res)
 {
   db.Article.remove({});
